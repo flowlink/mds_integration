@@ -10,7 +10,7 @@ module MDS
         def initialize(config)
           super
 
-          @number_of_days = config[:number_of_days] || 3
+          @number_of_days = config[:number_of_days] || 2
         end
 
         def builder(_)
