@@ -29,6 +29,7 @@ module MDS
             xml.ShipEmail       shipment[:email]
             xml.ShipPhone       shipment[:shipping_address][:phone]
 
+            setup_shipping_instructions(xml, shipment)
             setup_billing_information(xml, shipment)
 
             xml.CSEmail         shipment[:email]
@@ -41,6 +42,23 @@ module MDS
             end
           end
         end
+      end
+
+      def setup_shipping_instructions(xml, shipment)
+        mds_format = "%m/%d/%Y"
+        if shipment[:shipping_notes].present?
+          notes = shipment[:shipping_notes].gsub("&", "and")
+          raise "shipping_notes max length exceeded" if notes.length > 255
+          xml.OrderNotes      notes
+        end
+        if shipment[:no_ship_before].present?
+          xml.NoShipBefore    Date.parse(shipment[:no_ship_before]).strftime(mds_format)
+        end
+        if shipment[:must_ship_by].present?
+          xml.MustShipBy      Date.parse(shipment[:must_ship_by]).strftime(mds_format)
+        end
+      rescue => error
+        raise "Error setting up shipping instructions: #{error}"
       end
 
       def build_products(xml, shipment)
