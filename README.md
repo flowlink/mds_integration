@@ -1,6 +1,6 @@
 # MDS Fulfillment Integration
 
-This integration is designed to integrate Wombat with
+This integration is designed to integrate FlowLink with
 [MDS Fulfillment](http://www.mdsfulfillment.com/) API.
 
 This is a fully hosted and supported integration for use with the [FlowLink](http://flowlink.io/)
